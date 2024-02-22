@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="icon_size">64dp</dimen>
+    <dimen name="expand_icon">38dp</dimen>
     <dimen name="padding_small">8dp</dimen>
 </resources>
