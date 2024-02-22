@@ -1,12 +1,13 @@
 package com.example.mintreningsplayground
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,9 +27,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mintreningsplayground.data.Datasource
 import com.example.mintreningsplayground.data.StyrkeExercise
@@ -59,8 +62,8 @@ fun ExerciseCard(exercise: StyrkeExercise) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { expanded = !expanded }
-            )
+            .clickable(onClick = { expanded = !expanded })
+
     )
     {
         Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -73,7 +76,13 @@ fun ExerciseCard(exercise: StyrkeExercise) {
             )
             Spacer(Modifier.weight(1f))
             Image(
-                painter = painterResource(id = if (expanded) {R.drawable.collapse_icon} else {R.drawable.expand}),
+                painter = painterResource(
+                    id = if (expanded) {
+                        R.drawable.collapse_icon
+                    } else {
+                        R.drawable.expand
+                    }
+                ),
                 contentDescription = null,
                 alignment = Alignment.CenterEnd,
                 modifier = Modifier
@@ -85,7 +94,17 @@ fun ExerciseCard(exercise: StyrkeExercise) {
         }
         if (expanded)
             Row {
-                ExerciseIcon(exercise)
+                Column {
+                    ExerciseIcon(exercise)
+                    Text(text = stringResource(id = R.string.video),
+                        style = Typography.bodyLarge,
+                        modifier = Modifier
+                            .clickable {
+                                val intent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(exercise.videoLink))
+                            }
+                    )
+                }
                 Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))) {
 
                     Text(text = exercise.description, style = Typography.bodyLarge)
@@ -93,10 +112,15 @@ fun ExerciseCard(exercise: StyrkeExercise) {
                         Row {
                             Text(
                                 text = stringResource(id = R.string.setcomplete, i),
-                                style = Typography.bodyLarge, modifier = Modifier.align(Alignment.CenterVertically)
+                                style = Typography.bodyLarge,
+                                modifier = Modifier.align(Alignment.CenterVertically)
                             )
                             Spacer(Modifier.weight(1f))
-                            Switch(checked = false, onCheckedChange = {/*TODO*/ }, modifier = Modifier.align(Alignment.CenterVertically))
+                            Switch(
+                                checked = false,
+                                onCheckedChange = {/*TODO*/ },
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
                         }
                     }
                 }

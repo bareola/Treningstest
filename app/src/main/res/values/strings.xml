@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Min Treningsplayground</string>
     <string name="setcomplete">Set %1d complete</string>
+    <string name="video">Video</string>
 </resources>
