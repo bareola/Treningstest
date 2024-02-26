@@ -14,7 +14,7 @@ class Datasource {
         StyrkeExercise(
             name = "Squat",
             description = "A compound exercise that works the quads, hamstrings, and glutes.",
-            image = R.drawable.benchpress,
+            image = R.drawable.simplified_benchpress_illustration,
             videoLink = "https://www.youtube.com/watch?v=wYREQkVtvEc",
             numberOfSets = 3,
             setsCompleted = 0

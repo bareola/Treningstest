@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -57,8 +59,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ExerciseCard(exercise: StyrkeExercise) {
-    var expanded by remember { mutableStateOf(false) }
+fun ExerciseCard(exercise: StyrkeExercise, expanded: Boolean = false) {
+    var expanded by remember { mutableStateOf(expanded) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -138,10 +140,21 @@ fun ExerciseIcon(icon: StyrkeExercise, modifier: Modifier = Modifier) {
         )
     )
 }
+
+@Composable
+fun ExerciseList(exercises: List<StyrkeExercise>) {
+    LazyColumn(content = {
+        items(exercises) { exercise ->
+            ExerciseCard(exercise = exercise, expanded = true)
+        }
+    })
+}
+
+
 @Preview
 @Composable
-fun PreviewExerciseCard() {
+fun PreviewExerciseList() {
     MinTreningsplaygroundTheme {
-        ExerciseCard(exercise = Datasource().styrkeExercises.first())
+        ExerciseList(Datasource().styrkeExercises)
     }
 }
