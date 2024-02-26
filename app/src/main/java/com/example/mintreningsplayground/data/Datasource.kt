@@ -7,7 +7,7 @@ class Datasource {
             name = "Bench press",
             description = "A compound exercise that works the chest, shoulders, and triceps.",
             image = R.drawable.simplified_benchpress_illustration,
-            videoLink = "https://www.youtube.com/watch?v=H414_4v0fTM",
+            videoLink = "https://youtu.be/dQw4w9WgXcQ?si=0ppuAhkxvs5_9Ms1",
             numberOfSets = 3,
             setsCompleted = 0
         ),
@@ -15,7 +15,7 @@ class Datasource {
             name = "Squat",
             description = "A compound exercise that works the quads, hamstrings, and glutes.",
             image = R.drawable.simplified_benchpress_illustration,
-            videoLink = "https://www.youtube.com/watch?v=wYREQkVtvEc",
+            videoLink = "https://youtu.be/dQw4w9WgXcQ?si=0ppuAhkxvs5_9Ms1",
             numberOfSets = 3,
             setsCompleted = 0
         )
@@ -26,7 +26,7 @@ class Datasource {
             name = "Running",
             description = "A cardiovascular exercise that works the entire body.",
             image = R.drawable.benchpress,
-            videoLink = "https://www.youtube.com/watch?v=K80m_R82uFk",
+            videoLink = "https://youtu.be/dQw4w9WgXcQ?si=0ppuAhkxvs5_9Ms1",
             duration = 30,
             distance = 5
         ),
@@ -34,7 +34,7 @@ class Datasource {
             name = "Swimming",
             description = "A full-body workout that is easy on the joints.",
             image = R.drawable.benchpress,
-            videoLink = "https://www.youtube.com/watch?v=J4v_d_872Cs",
+            videoLink = "https://youtu.be/dQw4w9WgXcQ?si=0ppuAhkxvs5_9Ms1",
             duration = 30,
             distance = 1000
         )

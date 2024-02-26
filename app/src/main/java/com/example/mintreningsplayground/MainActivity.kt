@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mintreningsplayground.data.Datasource
 import com.example.mintreningsplayground.data.StyrkeExercise
@@ -42,119 +41,112 @@ import com.example.mintreningsplayground.ui.theme.Typography
 
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MinTreningsplaygroundTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-
-                }
-            }
-        }
-    }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContent {
+			MinTreningsplaygroundTheme { // A surface container using the 'background' color from the theme
+				Surface(
+					modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+				) {
+					PreviewExerciseList()
+				}
+			}
+		}
+	}
 }
 
 @Composable
 fun ExerciseCard(exercise: StyrkeExercise, expanded: Boolean = false) {
-    var expanded by remember { mutableStateOf(expanded) }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = { expanded = !expanded })
+	var expanded by remember { mutableStateOf(expanded) }
+	val context = LocalContext.current
+	Card(
+		modifier = Modifier
+			.fillMaxWidth()
+			.clickable(onClick = { expanded = !expanded })
 
-    )
-    {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = exercise.name,
-                style = Typography.headlineMedium,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(dimensionResource(id = R.dimen.padding_small))
-            )
-            Spacer(Modifier.weight(1f))
-            Image(
-                painter = painterResource(
-                    id = if (expanded) {
-                        R.drawable.collapse_icon
-                    } else {
-                        R.drawable.expand
-                    }
-                ),
-                contentDescription = null,
-                alignment = Alignment.CenterEnd,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .size(
-                        dimensionResource(id = R.dimen.expand_icon)
-                    )
-            )
-        }
-        if (expanded)
-            Row {
-                Column {
-                    ExerciseIcon(exercise)
-                    Text(text = stringResource(id = R.string.video),
-                        style = Typography.bodyLarge,
-                        modifier = Modifier
-                            .clickable {
-                                val intent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse(exercise.videoLink))
-                            }
-                    )
-                }
-                Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))) {
+	) {
+		Row(horizontalArrangement = Arrangement.SpaceBetween) {
+			Text(
+				text = exercise.name,
+				style = Typography.headlineMedium,
+				modifier = Modifier
+					.align(Alignment.CenterVertically)
+					.padding(dimensionResource(id = R.dimen.padding_small))
+			)
+			Spacer(Modifier.weight(1f))
+			Image(
+				painter = painterResource(
+					id = if (expanded) {
+						R.drawable.collapse_icon
+					} else {
+						R.drawable.expand
+					}
+				),
+				contentDescription = null,
+				alignment = Alignment.CenterEnd,
+				modifier = Modifier
+					.align(Alignment.CenterVertically)
+					.size(
+						dimensionResource(id = R.dimen.expand_icon)
+					)
+			)
+		}
+		if (expanded) Row {
+			Column {
+				ExerciseIcon(exercise)
+				Text(text = stringResource(id = R.string.video),
+					style = Typography.bodyLarge,
+					modifier = Modifier.clickable {
+						val intent = Intent(Intent.ACTION_VIEW, Uri.parse(exercise.videoLink))
+						context.startActivity(intent)
+					})
+			}
+			Column(modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))) {
 
-                    Text(text = exercise.description, style = Typography.bodyLarge)
-                    for (i in 1..exercise.numberOfSets) {
-                        Row {
-                            Text(
-                                text = stringResource(id = R.string.setcomplete, i),
-                                style = Typography.bodyLarge,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-                            Spacer(Modifier.weight(1f))
-                            Switch(
-                                checked = false,
-                                onCheckedChange = {/*TODO*/ },
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-                        }
-                    }
-                }
-            }
-    }
+				Text(text = exercise.description, style = Typography.bodyLarge)
+				for (i in 1..exercise.numberOfSets) {
+					Row {
+						Text(
+							text = stringResource(id = R.string.setcomplete, i),
+							style = Typography.bodyLarge,
+							modifier = Modifier.align(Alignment.CenterVertically)
+						)
+						Spacer(Modifier.weight(1f))
+						Switch(
+							checked = false,
+							onCheckedChange = {/*TODO*/ },
+							modifier = Modifier.align(Alignment.CenterVertically)
+						)
+					}
+				}
+			}
+		}
+	}
 }
 
 @Composable
 fun ExerciseIcon(icon: StyrkeExercise, modifier: Modifier = Modifier) {
-    Image(
-        painterResource(id = icon.image),
-        contentDescription = null,
-        modifier = modifier.size(
-            dimensionResource(id = R.dimen.icon_size)
-        )
-    )
+	Image(
+		painterResource(id = icon.image), contentDescription = null, modifier = modifier.size(
+			dimensionResource(id = R.dimen.icon_size)
+		)
+	)
 }
 
 @Composable
 fun ExerciseList(exercises: List<StyrkeExercise>) {
-    LazyColumn(content = {
-        items(exercises) { exercise ->
-            ExerciseCard(exercise = exercise, expanded = true)
-        }
-    })
+	LazyColumn(content = {
+		items(exercises) { exercise ->
+			ExerciseCard(exercise = exercise, expanded = true)
+		}
+	})
 }
 
 
 @Preview
 @Composable
 fun PreviewExerciseList() {
-    MinTreningsplaygroundTheme {
-        ExerciseList(Datasource().styrkeExercises)
-    }
+	MinTreningsplaygroundTheme {
+		ExerciseList(Datasource().styrkeExercises)
+	}
 }
