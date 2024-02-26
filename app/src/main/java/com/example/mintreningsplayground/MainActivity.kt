@@ -138,7 +138,6 @@ fun ExerciseIcon(icon: StyrkeExercise, modifier: Modifier = Modifier) {
         )
     )
 }
-
 @Preview
 @Composable
 fun PreviewExerciseCard() {
