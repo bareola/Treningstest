@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Min Treningsplayground</string>
+    <string name="app_name">My Playground</string>
     <string name="setcomplete">Set %1d complete</string>
     <string name="video">Video</string>
+    <string name="strenght">Strength</string>
+    <string name="cardio">Cardio</string>
+    <string name="duration">%1d minutes complete</string>
 </resources>
