@@ -1,7 +1,6 @@
 package com.example.mintreningsplayground
 
 import android.content.Intent
-import android.graphics.drawable.shapes.Shape
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,13 +15,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -40,16 +38,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.material3.CenterAlignedTopAppBar
 import com.example.mintreningsplayground.data.Datasource
 import com.example.mintreningsplayground.data.StyrkeExercise
 import com.example.mintreningsplayground.ui.theme.AppTheme
 import com.example.mintreningsplayground.ui.theme.Typography
+
 
 
 class MainActivity : ComponentActivity() {
@@ -75,7 +74,7 @@ fun TopAppBar() {
 			containerColor = MaterialTheme.colorScheme.primaryContainer,
 			titleContentColor = MaterialTheme.colorScheme.primary,
 
-		), title = {
+			), title = {
 			Row(
 				modifier = Modifier.fillMaxWidth(),
 				horizontalArrangement = Arrangement.SpaceEvenly
@@ -92,14 +91,7 @@ fun TopAppBar() {
 					style = Typography.displayLarge,
 					modifier = Modifier.align(Alignment.CenterVertically)
 				)
-			}
-			Row {
-				Divider (
-					color = MaterialTheme.colorScheme.primary,
-					modifier = Modifier
-						.height(1.dp)
-						.fillMaxWidth()
-				)
+
 			}
 		})
 	}) { innerPadding ->
@@ -114,38 +106,59 @@ fun AppContent(modifier: Modifier = Modifier) {
 	var selectedButton by remember { mutableStateOf("Cardio") }
 	Column(modifier = modifier) {
 		WorkoutButtons(selectedButton = selectedButton, onButtonSelected = { selectedButton = it })
-		WorkoutSummary(totalSetsComplete, exercisesComplete, totalSets = if (selectedButton == "Strength") {
-			Datasource().styrkeExercises.sumOf { it.sets!! }
-		} else {
-			Datasource().cardioExercises.sumOf { it.sets!! }
-		}, totalExercises = if (selectedButton == "Strength") {
-			Datasource().styrkeExercises.size
-		} else {
-			Datasource().cardioExercises.size
-		})
+		WorkoutSummary(totalSetsComplete,
+			exercisesComplete,
+			totalSets = if (selectedButton == "Strength") {
+				Datasource().styrkeExercises.sumOf { it.sets!! }
+			} else {
+				Datasource().cardioExercises.sumOf { it.sets!! }
+			},
+			totalExercises = if (selectedButton == "Strength") {
+				Datasource().styrkeExercises.size
+			} else {
+				Datasource().cardioExercises.size
+			})
 		when (selectedButton) {
-			"Strength" -> ExerciseList(Datasource().styrkeExercises,
+			"Strength" -> ExerciseList(
+				Datasource().styrkeExercises,
 				onSetComplete = { totalSetsComplete++ },
 				onExerciseComplete = { exercisesComplete++ },
-		)
+			)
 
-			"Cardio" -> ExerciseList(Datasource().cardioExercises,
+			"Cardio" -> ExerciseList(
+				Datasource().cardioExercises,
 				onSetComplete = { totalSetsComplete++ },
 				onExerciseComplete = { exercisesComplete++ },
-		)
+			)
 		}
 
 	}
 }
 
 @Composable
-fun WorkoutSummary(totalSetsComplete: Int, exercisesComplete: Int, totalSets: Int, totalExercises: Int) {
-	Text(text = stringResource(R.string.workout_summary, totalExercises,totalSets), style = Typography.bodyMedium)
+fun WorkoutSummary(
+	totalSetsComplete: Int, exercisesComplete: Int, totalSets: Int, totalExercises: Int
+) {
 	Text(
+		modifier = Modifier.padding(
+			start = dimensionResource(R.dimen.padding_small),
+			top = dimensionResource(R.dimen.padding_small),
+			end = dimensionResource(R.dimen.padding_small)
+		),
+		text = stringResource(R.string.workout_summary, totalExercises, totalSets),
+		style = Typography.bodyMedium
+	)
+	Text(
+		modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small)),
 		text = stringResource(R.string.workout_summary_exercise, exercisesComplete),
 		style = Typography.bodyMedium
 	)
 	Text(
+		modifier = Modifier.padding(
+			start = dimensionResource(R.dimen.padding_small),
+			bottom = dimensionResource(R.dimen.padding_small),
+			end = dimensionResource(R.dimen.padding_small)
+		),
 		text = stringResource(R.string.workout_summary_set, totalSetsComplete),
 		style = Typography.bodyMedium
 	)
@@ -153,8 +166,13 @@ fun WorkoutSummary(totalSetsComplete: Int, exercisesComplete: Int, totalSets: In
 
 @Composable
 fun WorkoutButtons(selectedButton: String, onButtonSelected: (String) -> Unit) {
-	Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+	Row(
+		horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()
+	) {
 		OutlinedButton(
+			modifier = Modifier.padding(
+				dimensionResource(R.dimen.padding_small)
+			),
 			onClick = { onButtonSelected("Strength") },
 			enabled = selectedButton != "Strength",
 			shape = MaterialTheme.shapes.small,
@@ -166,6 +184,9 @@ fun WorkoutButtons(selectedButton: String, onButtonSelected: (String) -> Unit) {
 		}
 
 		OutlinedButton(
+			modifier = Modifier.padding(
+				dimensionResource(R.dimen.padding_small)
+			),
 			onClick = { onButtonSelected("Cardio") },
 			enabled = selectedButton != "Cardio",
 			shape = MaterialTheme.shapes.small,
@@ -186,16 +207,17 @@ fun ExerciseCard(
 ) {
 	var expanded by remember { mutableStateOf(isExpanded) }
 	val context = LocalContext.current
-	var setCompletionStatus = remember {
+	val setCompletionStatus = remember {
 		mutableStateListOf(*Array<Boolean>(exercise.sets!!) { false })
 	}
 	Card(
 		modifier = modifier
 			.padding(dimensionResource(id = R.dimen.padding_small))
 			.fillMaxWidth()
-			.clickable(onClick = { expanded = !expanded })
+			.clickable(onClick = { expanded = !expanded }),
+		shape = MaterialTheme.shapes.small,
 
-	) {
+		) {
 		Row(horizontalArrangement = Arrangement.SpaceBetween) {
 			Text(
 				text = exercise.name,
@@ -226,7 +248,7 @@ fun ExerciseCard(
 			Column {
 				ExerciseIcon(exercise)
 				Text(text = stringResource(id = R.string.video),
-					style = Typography.bodyLarge,
+					style = Typography.headlineSmall,
 					modifier = Modifier
 						.clickable {
 							val intent = Intent(Intent.ACTION_VIEW, Uri.parse(exercise.videoLink))
@@ -246,12 +268,15 @@ fun ExerciseCard(
 					Row {
 						Text(
 							text = stringResource(R.string.duration, exercise.duration!!),
-							style = Typography.bodyLarge,
+							style = Typography.headlineMedium,
 							modifier = Modifier.align(Alignment.CenterVertically)
 						)
 						Spacer(Modifier.weight(1f))
-						Switch(
-							checked = setCompletionStatus[0], onCheckedChange = { isChecked ->
+						Switch(modifier = Modifier
+							.align(Alignment.CenterVertically)
+							.testTag("switch"),
+							checked = setCompletionStatus[0],
+							onCheckedChange = { isChecked ->
 								setCompletionStatus[0] = isChecked
 								if (isChecked) {
 									onSetComplete(1)
@@ -259,19 +284,20 @@ fun ExerciseCard(
 										onExerciseComplete()
 									}
 								}
-							}, modifier = Modifier.align(Alignment.CenterVertically)
-						)
+							})
 					}
 				} else {
 					for (i in 1..exercise.sets!!) {
 						Row {
 							Text(
 								text = stringResource(id = R.string.setcomplete, i),
-								style = Typography.bodyLarge,
+								style = Typography.headlineMedium,
 								modifier = Modifier.align(Alignment.CenterVertically)
 							)
 							Spacer(Modifier.weight(1f))
-							Switch(
+							Switch(modifier = Modifier
+								.align(Alignment.CenterVertically)
+								.testTag("switch"),
 								checked = setCompletionStatus[i - 1],
 								onCheckedChange = { isChecked ->
 									setCompletionStatus[i - 1] = isChecked
@@ -281,9 +307,7 @@ fun ExerciseCard(
 											onExerciseComplete()
 										}
 									}
-								},
-								modifier = Modifier.align(Alignment.CenterVertically)
-							)
+								})
 						}
 					}
 				}
@@ -295,9 +319,14 @@ fun ExerciseCard(
 @Composable
 fun ExerciseIcon(icon: StyrkeExercise, modifier: Modifier = Modifier) {
 	Image(
-		painterResource(id = icon.image), contentDescription = null, modifier = modifier.size(
-			dimensionResource(id = R.dimen.icon_size)
-		)
+		painterResource(id = icon.image),
+		contentDescription = null,
+		modifier = modifier
+			.size(dimensionResource(id = R.dimen.icon_size))
+			.padding(dimensionResource(id = R.dimen.padding_medium))
+			.border(
+				1.dp, MaterialTheme.colorScheme.onPrimaryContainer, MaterialTheme.shapes.medium
+			)
 	)
 }
 
@@ -307,7 +336,10 @@ fun ExerciseList(
 	onSetComplete: (Int) -> Unit,
 	onExerciseComplete: () -> Unit,
 ) {
-	LazyColumn(content = {
+	LazyColumn(modifier = Modifier.padding(
+		dimensionResource(id = R.dimen.padding_small)
+
+	), content = {
 		items(exercises) { exercise ->
 			ExerciseCard(
 				exercise = exercise,

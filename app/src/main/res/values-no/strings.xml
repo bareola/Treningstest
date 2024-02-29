@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Min Lekeplass</string>
+    <string name="setcomplete">Sett %1d fullført</string>
+    <string name="video">Video</string>
+    <string name="strenght">Styrke</string>
+    <string name="cardio">Utholdenhet</string>
+    <string name="duration">%1d minutter fullført</string>
+    <string name="workout_summary">Totalt antall øvelser og sett: %1d og %2d</string>
+    <string name="workout_summary_exercise">Totalt antall fullførte øvelser: %1d</string>
+    <string name="workout_summary_set">Totalt antall fullførte sett (alle øvelser): %1d</string>
+</resources>
