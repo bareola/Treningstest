@@ -5,4 +5,7 @@
     <string name="strenght">Strength</string>
     <string name="cardio">Cardio</string>
     <string name="duration">%1d minutes complete</string>
+    <string name="workout_summary">Total number of exercises and sets: %1d and %2d</string>
+    <string name="workout_summary_exercise">Total number of complete exercises: %1d</string>
+    <string name="workout_summary_set">Total number of complete sets (all exercises): %1d</string>
 </resources>
