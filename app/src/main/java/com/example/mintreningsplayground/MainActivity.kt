@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,7 +49,6 @@ import com.example.mintreningsplayground.data.Datasource
 import com.example.mintreningsplayground.data.StyrkeExercise
 import com.example.mintreningsplayground.ui.theme.AppTheme
 import com.example.mintreningsplayground.ui.theme.Typography
-
 
 
 class MainActivity : ComponentActivity() {
@@ -101,8 +101,8 @@ fun TopAppBar() {
 
 @Composable
 fun AppContent(modifier: Modifier = Modifier) {
-	var totalSetsComplete by remember { mutableStateOf(0) }
-	var exercisesComplete by remember { mutableStateOf(0) }
+	var totalSetsComplete by remember { mutableIntStateOf(0) }
+	var exercisesComplete by remember { mutableIntStateOf(0) }
 	var selectedButton by remember { mutableStateOf("Cardio") }
 	Column(modifier = modifier) {
 		WorkoutButtons(selectedButton = selectedButton, onButtonSelected = { selectedButton = it })
@@ -141,23 +141,23 @@ fun WorkoutSummary(
 ) {
 	Text(
 		modifier = Modifier.padding(
-			start = dimensionResource(R.dimen.padding_small),
+			start = dimensionResource(R.dimen.padding_large),
 			top = dimensionResource(R.dimen.padding_small),
-			end = dimensionResource(R.dimen.padding_small)
+			end = dimensionResource(R.dimen.padding_large)
 		),
 		text = stringResource(R.string.workout_summary, totalExercises, totalSets),
 		style = Typography.bodyMedium
 	)
 	Text(
-		modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small)),
+		modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_large)),
 		text = stringResource(R.string.workout_summary_exercise, exercisesComplete),
 		style = Typography.bodyMedium
 	)
 	Text(
 		modifier = Modifier.padding(
-			start = dimensionResource(R.dimen.padding_small),
+			start = dimensionResource(R.dimen.padding_large),
 			bottom = dimensionResource(R.dimen.padding_small),
-			end = dimensionResource(R.dimen.padding_small)
+			end = dimensionResource(R.dimen.padding_large)
 		),
 		text = stringResource(R.string.workout_summary_set, totalSetsComplete),
 		style = Typography.bodyMedium

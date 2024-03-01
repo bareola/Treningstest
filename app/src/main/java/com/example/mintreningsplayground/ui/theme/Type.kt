@@ -21,9 +21,9 @@ val Typography = Typography(
 	), labelSmall = TextStyle(
 		fontFamily = Montserrat, fontWeight = FontWeight.Bold, fontSize = 14.sp
 	), bodySmall = TextStyle(
-		fontFamily = Montserrat, fontWeight = FontWeight.Normal, fontSize = 14.sp
+		fontFamily = Montserrat, fontWeight = FontWeight.Normal, fontSize = 12.sp
 	), bodyMedium = TextStyle(
-		fontFamily = Montserrat, fontWeight = FontWeight.Normal, fontSize = 16.sp
+		fontFamily = Montserrat, fontWeight = FontWeight.Normal, fontSize = 14.sp
 	), bodyLarge = TextStyle(
 		fontFamily = Montserrat, fontWeight = FontWeight.Bold, fontSize = 18.sp
 	), headlineSmall = TextStyle(

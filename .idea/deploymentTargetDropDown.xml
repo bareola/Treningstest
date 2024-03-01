@@ -2,35 +2,26 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleUnitTest">
-        <State />
-      </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="testCheckedSetsMatchesText()">
-        <State />
-      </entry>
-      <entry key="testStrengthButtonEnabled()">
-        <State />
-      </entry>
-      <entry key="testStrengthButtonEnabled() (1)">
         <State>
-          <targetSelectedWithDropDown>
+          <runningDeviceTargetSelectedWithDropDown>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\ogiae\.android\avd\Pixel_3_API_30.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-25141JEGR05170-4PhhRq._adb-tls-connect._tcp" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-29T13:09:41.790892900Z" />
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-29T19:35:43.819106900Z" />
         </State>
       </entry>
-      <entry key="testTotalSetsAndExercisesMatchDataCollections()">
+      <entry key="testCompleteCheckedSetsMatchesText()">
+        <State />
+      </entry>
+      <entry key="testRandomExercisesAndSets()">
         <State />
       </entry>
     </value>
